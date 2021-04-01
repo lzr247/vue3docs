@@ -1,9 +1,9 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <div id="counter">
-      Counter: {{ counter }}
-    </div>
+  <div id="computed-basics">
+    <p>Has published books:</p>
+    <span>{{ publishedBooksMessage }}</span>
+    <p>Full Name:</p>
+    <span>{{ fullName }}</span>
   </div>
 </template>
 
@@ -15,13 +15,33 @@ export default {
   },
   data() {
     return  {
-      counter: 0
+      author: {
+        name: 'John Doe',
+        books: [
+          'Vue 2 - Advanced Guide',
+          'Vue 3 - Basic Guide',
+          'Vue 4 - The Mystery'
+        ]
+      },
+      firstName: 'Lazar',
+      lastName: 'Conic'
     }
   },
-  mounted() {
-    setInterval(() => {
-      this.counter++;
-    }, 1000);
+  computed: {
+    publishedBooksMessage() {
+      return this.author.books.length > 3 ? 'Yes' : 'No'
+    },
+    fullName: {
+      // getter
+      get() {
+        return this.firstName + ' ' + this.lastName
+      },
+      set(newValue) {
+        const names = newValue.split(' ')
+        this.firstName = names[0]
+        this.lastName = names[names.length-1]
+      }
+    }
   }
 }
 </script>
